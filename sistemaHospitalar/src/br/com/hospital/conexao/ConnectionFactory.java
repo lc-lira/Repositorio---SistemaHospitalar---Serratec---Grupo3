@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-    private String url = "jdbc:postgresql://ep-cold-sunset-ac3dirxl-pooler.sa-east-1.aws.neon.tech:5432/postgres";
+    private String url = "jdbc:postgresql://ep-cold-sunset-ac3dirxl-pooler.sa-east-1.aws.neon.tech:5432/sistema_hospitlar?sslmode=require&channel_binding=require";
     private String usuario = "neondb_owner";
     private String senha = "npg_j0iWzkZYGt3g";
 
