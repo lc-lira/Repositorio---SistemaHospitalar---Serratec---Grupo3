@@ -1,5 +1,0 @@
-git checkout main
-git pull origin main
-git chekout marcelo
-git merge main
-
