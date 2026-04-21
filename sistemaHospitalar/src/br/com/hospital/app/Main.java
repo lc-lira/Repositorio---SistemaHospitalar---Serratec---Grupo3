@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
-
 import br.com.hospital.dao.FaturamentoDao;
 import br.com.hospital.model.Faturamento;
 
