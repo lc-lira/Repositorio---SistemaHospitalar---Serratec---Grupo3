@@ -5,29 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-    private String url = "jdbc:postgresql://ep-cold-sunset-ac3dirxl-pooler.sa-east-1.aws.neon.tech:5432/postgres";
+
+    private String url = "jdbc:postgresql://ep-cold-sunset-ac3dirxl-pooler.sa-east-1.aws.neon.tech:5432/sistema_hospitlar?sslmode=require&channel_binding=require";
     private String usuario = "neondb_owner";
     private String senha = "npg_j0iWzkZYGt3g";
-
-    private Connection connection;
-
+    
     public Connection getConnection() {
         System.out.println("Conectando no banco de dados....");
+
         try {
-            connection = DriverManager.getConnection(url, usuario, senha);
-            if (connection != null) {
-                System.out.println("Conectado com sucesso!");
-                return connection;
-            } else {
-                System.out.println("Não foi possível conectar!");
-            }
+            Connection connection = DriverManager.getConnection(url, usuario, senha);
+            System.out.println("Conectado com sucesso!");
+            return connection;
 
         } catch (SQLException e) {
-            System.out.println("Problemas no Driver ou senha incorreta do banco");
+            System.out.println("Erro ao conectar:");
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return connection;
     }
-
 }
-
