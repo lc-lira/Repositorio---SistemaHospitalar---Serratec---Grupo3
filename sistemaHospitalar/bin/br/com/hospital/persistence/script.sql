@@ -153,6 +153,19 @@ CREATE TABLE faturamento(
     FOREIGN KEY (id_atendimento) REFERENCES atendimento(id_atendimento)
 );
 
+CREATE TABLE nota_fiscal(
+    id_nota_fiscal SERIAL PRIMARY KEY,
+    FOREIGN KEY (id_fatura) REFERENCES faturamento(id_faturamento) NOT NULL,
+    FOREIGN KEY (paciente) REFERENCES paciente(id_paciente) NOT NULL,
+    descricao TEXT,
+    FOREIGN KEY (valor_total) REFERENCES faturamento(valor) NOT NULL,
+    valorPagoPIS DECIMAL(10,2) NOT NULL,
+    valorPagoCOFINS DECIMAL(10,2) NOT NULL,
+    valorPagoISS DECIMAL(10,2) NOT NULL,
+    valorPagoIRPJ DECIMAL(10,2) NOT NULL,
+    valorPagoCSLL DECIMAL(10,2) NOT NULL,
+);
+
 INSERT INTO hospital (cnpj, nome) VALUES
 ('00.000.000/0001-01','Hospital Central'),
 ('00.000.000/0001-02','Hospital Vida'),

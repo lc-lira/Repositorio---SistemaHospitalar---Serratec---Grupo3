@@ -1,0 +1,35 @@
+[33mcommit 66a85c783cfe826e482c19eab4f1dde75e8f8b01[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: c8e232d e10dabc
+Author: Bruno Passamani <brunompassamani@gmail.com>
+Date:   Mon Apr 20 19:07:19 2026 -0300
+
+    Merge pull request #16 from lc-lira/lucaslira
+    
+    Criacao de todas as tabelas do banco e inserção de dados
+
+[33mcommit e10dabccf357705459ec666ed243a58f572e707c[m[33m ([m[1;31morigin/lucaslira[m[33m)[m
+Author: lc-lira <lbrancolira@gmail.com>
+Date:   Mon Apr 20 19:06:18 2026 -0300
+
+    Criacao de todas as tabelas do banco e inserção de dados Obs:Tudo no script.sql
+
+[33mcommit c8e232db2d143a5cef978758cbeeef941bd7311a[m
+Merge: bfaa721 f778ac7
+Author: Bruno Passamani <brunompassamani@gmail.com>
+Date:   Mon Apr 20 16:08:04 2026 -0300
+
+    Merge pull request #15 from lc-lira/marcelo
+    
+    Estrutura inicial e conexão com banco de dados
+
+[33mcommit f778ac7695e50e7b6b8cf15af01220979698ec57[m[33m ([m[1;31morigin/marcelo[m[33m)[m
+Author: MarceloMdx <marcelosaphira@gmail.com>
+Date:   Mon Apr 20 16:05:16 2026 -0300
+
+    Estrutura inicial e conexão com banco de dados
+
+[33mcommit bfaa721ee2dba0a261403a403fd815aa0238142e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mBruno[m[33m, [m[1;31morigin/poo/rebeka[m[33m, [m[1;31morigin/maicon[m[33m, [m[1;31morigin/Bruno[m[33m)[m
+Author: Lucas Lira <lbrancolira@gmail.com>
+Date:   Fri Apr 17 18:58:30 2026 -0300
+
+    Initial commit
