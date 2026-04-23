@@ -3,10 +3,13 @@ package br.com.hospital.model;
 public class Paciente {
   private Integer id;
   private String nome;
-  private Integer cpf;
+  private String cpf;
   
-  public Paciente(Integer id, String nome, Integer cpf) {
-    this.id = id;
+public Paciente(String nome) {
+    this.nome = nome;
+  }
+
+  public Paciente(String nome, String cpf) {
     this.nome = nome;
     this.cpf = cpf;
   }
@@ -24,7 +27,7 @@ public class Paciente {
     return nome;
   }
 
-  public Integer getCpf() {
+  public String getCpf() {
     return cpf;
   }
 

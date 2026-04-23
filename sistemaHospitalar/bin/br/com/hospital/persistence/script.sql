@@ -156,7 +156,10 @@ CREATE TABLE faturamento(
 CREATE TABLE nota_fiscal(
     id_nota_fiscal SERIAL PRIMARY KEY,
     FOREIGN KEY (id_fatura) REFERENCES faturamento(id_faturamento) NOT NULL,
-    FOREIGN KEY (paciente) REFERENCES paciente(id_paciente) NOT NULL,
+    paciente VARCHAR(100) NOT NULL,
+    cpf VARCHAR(18) NOT NULL,
+    hospital VARCHAR(100) NOT NULL,
+    cnpj VARCHAR(30),
     descricao TEXT,
     FOREIGN KEY (valor_total) REFERENCES faturamento(valor) NOT NULL,
     valorPagoPIS DECIMAL(10,2) NOT NULL,

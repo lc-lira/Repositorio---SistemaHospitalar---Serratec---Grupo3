@@ -7,13 +7,20 @@ import br.com.hospital.exceptions.ErroPlano;
 
 public class Hospital {
 
-      private String cnpj;
+      private Integer id;
       private String nome;
+      private String cnpj;
 
       List<Alas> alas = new ArrayList<Alas>();
       List<PlanodeSaude> planosDeSaude = new ArrayList<PlanodeSaude>();
       
-      public Hospital(String cnpj, List<Alas> alas, String nome) {
+      public Hospital(String nome, String cnpj){
+        this.nome = nome;
+        this.cnpj = cnpj;
+      }
+
+      public Hospital(Integer id, String cnpj, List<Alas> alas, String nome) {
+        this.id = id;
         this.cnpj = cnpj;
         this.alas = alas;
         this.nome = nome;

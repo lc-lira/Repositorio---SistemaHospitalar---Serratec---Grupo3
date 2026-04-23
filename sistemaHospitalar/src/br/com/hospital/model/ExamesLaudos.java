@@ -3,16 +3,18 @@ package br.com.hospital.model;
 import java.time.LocalDate;
 
 public class ExamesLaudos {
-  private LocalDate dataHora; 
-  private LocalDate dataResultado; 
-  private String tipo;
+  private Integer id;
+  private LocalDate dataHora;
+  private LocalDate dataResultado;
+  private Tipo tipo;
   private Double custo;
   private String descricao;
   private String resultado;
   private String anexo;
-  
-  public ExamesLaudos(LocalDate dataHora, LocalDate dataResultado, String tipo, Double custo, String descricao,
-      String resultado, String anexo) {
+
+  public ExamesLaudos(Integer id, LocalDate dataHora, LocalDate dataResultado, Tipo tipo, Double custo,
+      String descricao, String resultado, String anexo) {
+    this.id = id;
     this.dataHora = dataHora;
     this.dataResultado = dataResultado;
     this.tipo = tipo;
@@ -20,6 +22,14 @@ public class ExamesLaudos {
     this.descricao = descricao;
     this.resultado = resultado;
     this.anexo = anexo;
+  }
+
+  public enum Tipo {
+    SANGUE, IMAGEM, URINA, RAIO_X, TOMOGRAFIA, ENDOSCOPIA;
+  }
+
+  public Integer getId() {
+    return id;
   }
 
   public LocalDate getDataHora() {
@@ -30,7 +40,7 @@ public class ExamesLaudos {
     return dataResultado;
   }
 
-  public String getTipo() {
+  public Tipo getTipo() {
     return tipo;
   }
 
@@ -50,5 +60,4 @@ public class ExamesLaudos {
     return anexo;
   }
 
-  
 }
