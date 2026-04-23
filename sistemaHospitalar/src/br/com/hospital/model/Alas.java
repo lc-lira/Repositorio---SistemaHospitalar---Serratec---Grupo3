@@ -10,7 +10,7 @@ public class Alas{
     UTI, EMERGENCIA, ENFERMARIA, PEDIATRIA, MATERNIDADADE, CARDIOLOGIA;
     
   }
- 
+
   public Alas(Tipo tipo, Enfermeira enfermeira) {
     this.tipo = tipo;
     this.enfermeira = enfermeira;

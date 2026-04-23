@@ -21,7 +21,7 @@ public class Leitos {
   public Status getStatusAtual() {
     return status;
   }
-   public String getIdentificador() {
+  public String getIdentificador() {
     return identificador;
   }
 

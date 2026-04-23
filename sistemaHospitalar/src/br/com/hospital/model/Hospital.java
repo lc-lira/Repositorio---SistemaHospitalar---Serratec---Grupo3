@@ -3,6 +3,8 @@ package br.com.hospital.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.hospital.exceptions.ErroPlano;
+
 public class Hospital {
 
       private String cnpj;
