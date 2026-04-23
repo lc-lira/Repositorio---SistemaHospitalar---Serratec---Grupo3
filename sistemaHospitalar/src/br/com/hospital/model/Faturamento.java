@@ -1,33 +1,64 @@
 package br.com.hospital.model;
 
-public class Faturamento {
-    private String nome;
-    private Double valor;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-    public Faturamento(String nome, Double valor) {
+import br.com.hospital.enums.ValorImposto;
+
+public class Faturamento implements CalculoImposto {
+    private Integer id;
+    private String nome;
+    private String cpf;
+    private Double valor;
+    private String cnpj;
+    private String nomeHospital;
+    private String tipo;
+
+    public Faturamento(Integer id, String nome, String cpf, Double valor, String cnpj, String nomeHospital,
+            String tipo) {
+        this.id = id;
         this.nome = nome;
+        this.cpf = cpf;
         this.valor = valor;
+        this.cnpj = cnpj;
+        this.nomeHospital = nomeHospital;
+        this.tipo = tipo;
     }
 
-    @Override
-    public String toString() {
-        return "Faturamento: nome= " + nome + " , valor= " + valor + '}';
+    public Integer getId() {
+        return id;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public String getCpf() {
+        return cpf;
     }
 
     public Double getValor() {
         return valor;
     }
 
-    public void setValor(Double valor) {
-        this.valor = valor;
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public String getNomeHospital() {
+        return nomeHospital;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    @Override
+    public Double calcular(Double valorFatura, ValorImposto imposto) {
+        Double desconto = valorFatura * imposto.getValorPorImposto();
+        return desconto;
     }
 
 }

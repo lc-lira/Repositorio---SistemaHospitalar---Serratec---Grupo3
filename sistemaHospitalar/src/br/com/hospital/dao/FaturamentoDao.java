@@ -15,8 +15,8 @@ public class FaturamentoDao {
     public FaturamentoDao() {
     }
 
-    public List<Faturamento> gerarFatura() {
-        String sql = "SELECT c.nome, f.valor FROM faturamento f INNER JOIN atendimento a ON f.id_atendimento = a.id_atendimento INNER JOIN paciente c ON a.id_paciente= c.id_paciente";
+    public List<Faturamento> gerarListaFaturamentos() {
+        String sql = "SELECT f.id_faturamento, p.nome, p.cpf, f.valor, h.cnpj, h.nome as nome_hospital, a.tipo FROM faturamento f INNER JOIN atendimento a ON f.id_atendimento = a.id_atendimento INNER JOIN paciente p ON a.id_paciente= p.id_paciente INNER JOIN hospital h on p.id_paciente = h.id_hospital";
 
         List<Faturamento> faturamento = new ArrayList<>();
 
@@ -26,8 +26,13 @@ public class FaturamentoDao {
 
             while (rs.next()) {
                 Faturamento fatura = new Faturamento(
+                        rs.getInt("id_faturamento"),
                         rs.getString("nome"),
-                        rs.getDouble("valor"));
+                        rs.getString("cpf"),
+                        rs.getDouble("valor"),
+                        rs.getString("cnpj"),
+                        rs.getString("nome_hospital"),
+                        rs.getString("tipo"));
                 faturamento.add(fatura);
             }
 
@@ -41,6 +46,21 @@ public class FaturamentoDao {
         }
 
         return faturamento;
+
     }
     
+    public void salvarNFBanco(){
+        String sql = "insert into nota_fiscal()"
+
+        try {
+            PreparedStatement stmt = connection.prepareCall(sql);
+            stmt.
+            stmt.execute();
+            stmt.close();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println("Não foi possível salvar a nota no banco de dados!");
+        }
+    }
+
 }

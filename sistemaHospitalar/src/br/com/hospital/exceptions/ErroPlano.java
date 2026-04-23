@@ -1,4 +1,4 @@
-package br.com.hospital.model;
+package br.com.hospital.exceptions;
 
 public class ErroPlano extends Exception {
 
