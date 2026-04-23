@@ -1,7 +1,13 @@
 package br.com.hospital.dao;
 
-import br.com.hospital.conexao.ConnectionFactory;
+import br.com.hospital.enums.ValorImposto;
+import br.com.hospital.model.Atendimento;
 import br.com.hospital.model.Faturamento;
+import br.com.hospital.model.Hospital;
+import br.com.hospital.model.Paciente;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,9 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FaturamentoDao {
-    private Connection connection = (new ConnectionFactory()).getConnection();
+    private Connection connection;
 
-    public FaturamentoDao() {
+    public FaturamentoDao(Connection connection) {
+        this.connection = connection;
     }
 
     public List<Faturamento> gerarListaFaturamentos() {
@@ -21,24 +28,33 @@ public class FaturamentoDao {
         List<Faturamento> faturamento = new ArrayList<>();
 
         try {
-            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            PreparedStatement stmt = connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
+                Paciente paciente = new Paciente(
+                        rs.getString("nome"),
+                        rs.getString("cpf"));
+
+                Hospital hospital = new Hospital(
+                        rs.getString("nome_hospital"),
+                        rs.getString("cnpj"));
+
+                Atendimento atendimento = new Atendimento(
+                        Atendimento.Tipo.valueOf(rs.getString("tipo")));
+
                 Faturamento fatura = new Faturamento(
                         rs.getInt("id_faturamento"),
-                        rs.getString("nome"),
-                        rs.getString("cpf"),
                         rs.getDouble("valor"),
-                        rs.getString("cnpj"),
-                        rs.getString("nome_hospital"),
-                        rs.getString("tipo"));
+                        paciente,
+                        hospital,
+                        atendimento);
+
                 faturamento.add(fatura);
             }
 
             rs.close();
             stmt.close();
-            this.connection.close();
 
         } catch (SQLException e) {
             System.err.println("Problemas ao listar as notas fiscais");
@@ -48,18 +64,41 @@ public class FaturamentoDao {
         return faturamento;
 
     }
-    
-    public void salvarNFBanco(){
-        String sql = "insert into nota_fiscal()"
+
+    public void salvarNFBanco(Faturamento faturamento) {
+        String sql = "insert into nota_fiscal(id_fatura,valor_total,descricao,valorpagopis,valorpagocofins,valorpagoiss,valorpagoirpj,valorpagocsll,paciente,hospital,cnpj,cpf) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+        BigDecimal iss = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.ISS)).setScale(2,
+                RoundingMode.HALF_UP);
+        BigDecimal pis = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.PIS)).setScale(2,
+                RoundingMode.HALF_UP);
+        BigDecimal cofins = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.COFINS))
+                .setScale(2, RoundingMode.HALF_UP);
+        BigDecimal irpj = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.IRPJ)).setScale(2,
+                RoundingMode.HALF_UP);
+        BigDecimal csll = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.CSLL)).setScale(2,
+                RoundingMode.HALF_UP);
 
         try {
-            PreparedStatement stmt = connection.prepareCall(sql);
-            stmt.
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, faturamento.getId());
+            stmt.setDouble(2, faturamento.getValor());
+            stmt.setString(3, faturamento.getAtendimento().getTipo().name());
+            stmt.setBigDecimal(4, iss);
+            stmt.setBigDecimal(5, pis);
+            stmt.setBigDecimal(6, cofins);
+            stmt.setBigDecimal(7, irpj);
+            stmt.setBigDecimal(8, csll);
+            stmt.setString(9, faturamento.getPaciente().getNome());
+            stmt.setString(10, faturamento.getHospital().getNome());
+            stmt.setString(11, faturamento.getHospital().getCnpj());
+            stmt.setString(12, faturamento.getPaciente().getCpf());
+
             stmt.execute();
             stmt.close();
-            connection.close();
+
         } catch (Exception e) {
             System.err.println("Não foi possível salvar a nota no banco de dados!");
+            e.printStackTrace();
         }
     }
 

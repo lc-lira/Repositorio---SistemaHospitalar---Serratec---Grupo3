@@ -1,34 +1,43 @@
 package br.com.hospital.model;
 
 public class Enfermeira {
+  private Integer id;
   private String cre;
-  private String truno;
+  private Turno turno;
   private String respNome;
   private String nome;
-  
-  public Enfermeira(String cre, String truno, String respNome, String nome) {
+
+  public Enfermeira(Integer id, String cre, Turno turno, String respNome, String nome) {
+    this.id = id;
     this.cre = cre;
-    this.truno = truno;
+    this.turno = turno;
     this.respNome = respNome;
     this.nome = nome;
   }
-  
+
+  public enum Turno {
+
+    MANHA,TARDE,NOITE;
+  }
+
+  public Integer getId() {
+    return id;
+  }
+
   public String getCre() {
     return cre;
   }
 
-  public String getTruno() {
-    return truno;
+  public Turno getTurno() {
+    return turno;
   }
 
   public String getRespNome() {
     return respNome;
   }
 
-
   public String getNome() {
     return nome;
   }
 
-  
 }
