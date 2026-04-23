@@ -66,7 +66,7 @@ public class FaturamentoDao {
     }
 
     public void salvarNFBanco(Faturamento faturamento) {
-        String sql = "insert into nota_fiscal(id_fatura,valor_total,descricao,valorpagopis,valorpagocofins,valorpagoiss,valorpagoirpj,valorpagocsll,paciente,hospital,cnpj,cpf) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO nota_fiscal (id_fatura, valor_total, descricao, valorpagopis, valorpagocofins, valorpagoiss, valorpagoirpj, valorpagocsll, paciente, hospital, cnpj, cpf) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM nota_fiscal nf WHERE nf.id_fatura = ?)";
         BigDecimal iss = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.ISS)).setScale(2,
                 RoundingMode.HALF_UP);
         BigDecimal pis = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.PIS)).setScale(2,
@@ -92,6 +92,7 @@ public class FaturamentoDao {
             stmt.setString(10, faturamento.getHospital().getNome());
             stmt.setString(11, faturamento.getHospital().getCnpj());
             stmt.setString(12, faturamento.getPaciente().getCpf());
+            stmt.setInt(13, faturamento.getId());
 
             stmt.execute();
             stmt.close();
