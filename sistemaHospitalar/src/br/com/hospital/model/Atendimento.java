@@ -44,7 +44,7 @@ public class Atendimento {
     return tipo;
   }
 
-  public String getStatus() {
+  public Status getStatus() {
     return status;
   }
 
