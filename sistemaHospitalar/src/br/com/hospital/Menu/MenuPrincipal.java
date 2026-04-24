@@ -36,14 +36,12 @@ public class MenuPrincipal {
                     case 1:
                         FaturamentoDao fDao = new FaturamentoDao(connection);
                         List<Faturamento> faturas = fDao.gerarListaFaturamentos();
-                        Integer N1 = 1;
-                        Integer N2 = 1;
 
                         JOptionPane.showMessageDialog(null, "Gerando nota fiscal no Formato TXT e CSV...");
                         for (Faturamento notas : faturas) {
                             NotaFiscal nf = new NotaFiscal(notas);
-                            nf.gerarNotaFiscalTXT(N1++);
-                            nf.gerarNotaFiscalCSV(N2++);
+                            nf.gerarNotaFiscalTXT();
+                            nf.gerarNotaFiscalCSV();
                             fDao.salvarNFBanco(notas);
                         }
 
@@ -80,7 +78,7 @@ public class MenuPrincipal {
                         } else {
                             JOptionPane.showMessageDialog(null, "Nota fiscal não encontrada!", "Erro", JOptionPane.ERROR_MESSAGE);
                         }
-                        buscaNF.gerarNotaFiscalCSV(idBusca);
+                        buscaNF.gerarNotaFiscalCSV();
 
                         JOptionPane.showMessageDialog(null, "Nota gerada com sucesso!", "Exportação Concluída", JOptionPane.INFORMATION_MESSAGE);
                     case 3:

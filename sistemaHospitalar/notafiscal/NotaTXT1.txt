@@ -1,0 +1,42 @@
+Prestador de Serviço
+Clinica: Hospital Central
+CNPJ: 00.000.000/0001-01
+
+Tomador
+Paciente: João Pedro
+CPF: 000.000.000-01
+
+Descrição do Serviço
+Tipo Serviço: CONSULTA
+
+Valor da Nota
+Valor bruto do serviço: R$ 200.0
+
+ISS
+Alíquota: 3.0%
+Valor: R$ 6.00
+
+PIS
+Alíquota: 0.65%
+Valor: R$ 1.30
+
+COFINS
+Alíquota: 3.0%
+Valor: R$ 6.00
+
+IRPJ
+Alíquota: 1.2%
+Valor: R$ 2.40
+
+CSLL
+Alíquota: 1.08%
+Valor: R$ 2.16
+
+RESUMO DOS IMPOSTOS
+
+Impostos - Taxa - Valor
+ISS - 3.0% - R$ 6.00
+PIS - 0.65% - R$ 1.30
+COFINS - 3.0% - R$ 6.00
+IRPJ - 1.2% - R$ 2.40
+CSLL - 1.08% - R$ 2.16
