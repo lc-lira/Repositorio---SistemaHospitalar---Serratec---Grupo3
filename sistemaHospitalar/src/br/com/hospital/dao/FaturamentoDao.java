@@ -23,7 +23,7 @@ public class FaturamentoDao {
     }
 
     public List<Faturamento> gerarListaFaturamentos() {
-        String sql = "SELECT f.id_faturamento, p.nome, p.cpf, f.valor, h.cnpj, h.nome as nome_hospital, a.tipo FROM faturamento f INNER JOIN atendimento a ON f.id_atendimento = a.id_atendimento INNER JOIN paciente p ON a.id_paciente= p.id_paciente INNER JOIN hospital h on p.id_paciente = h.id_hospital";
+        String sql = "SELECT f.id_faturamento, p.nome, p.cpf, f.valor, h.cnpj, h.nome AS nome_hospital, a.tipo FROM faturamento f INNER JOIN atendimento a ON f.id_atendimento = a.id_atendimento INNER JOIN paciente p ON a.id_paciente = p.id_paciente INNER JOIN hospital h ON a.id_atendimento = h.id_hospital;";
 
         List<Faturamento> faturamento = new ArrayList<>();
 
@@ -66,7 +66,8 @@ public class FaturamentoDao {
     }
 
     public void salvarNFBanco(Faturamento faturamento) {
-        String sql = "INSERT INTO nota_fiscal (id_fatura, valor_total, descricao, valorpagopis, valorpagocofins, valorpagoiss, valorpagoirpj, valorpagocsll, paciente, hospital, cnpj, cpf) SELECT ?,?,?,?,?,?,?,?,?,?,?,? WHERE NOT EXISTS (SELECT 1 FROM nota_fiscal nf WHERE nf.id_fatura = ?)";
+        String sql = "INSERT INTO nota_fiscal (id_fatura, paciente, cpf, hospital, cnpj, valor_total, descricao, valorpagopis, valorpagocofins, valorpagoiss, valorpagoirpj, valorpagocsll) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        ;
         BigDecimal iss = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.ISS)).setScale(2,
                 RoundingMode.HALF_UP);
         BigDecimal pis = new BigDecimal(faturamento.calcular(faturamento.getValor(), ValorImposto.PIS)).setScale(2,
@@ -81,25 +82,28 @@ public class FaturamentoDao {
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, faturamento.getId());
-            stmt.setDouble(2, faturamento.getValor());
-            stmt.setString(3, faturamento.getAtendimento().getTipo().name());
-            stmt.setBigDecimal(4, iss);
-            stmt.setBigDecimal(5, pis);
-            stmt.setBigDecimal(6, cofins);
-            stmt.setBigDecimal(7, irpj);
-            stmt.setBigDecimal(8, csll);
-            stmt.setString(9, faturamento.getPaciente().getNome());
-            stmt.setString(10, faturamento.getHospital().getNome());
-            stmt.setString(11, faturamento.getHospital().getCnpj());
-            stmt.setString(12, faturamento.getPaciente().getCpf());
-            stmt.setInt(13, faturamento.getId());
+
+            stmt.setString(2, faturamento.getPaciente().getNome());
+            stmt.setString(3, faturamento.getPaciente().getCpf());
+
+            stmt.setString(4, faturamento.getHospital().getNome());
+            stmt.setString(5, faturamento.getHospital().getCnpj());
+
+            stmt.setDouble(6, faturamento.getValor());
+
+            stmt.setString(7, faturamento.getAtendimento().getTipo().name());
+
+            stmt.setBigDecimal(8, pis);
+            stmt.setBigDecimal(9, cofins);
+            stmt.setBigDecimal(10, iss);
+            stmt.setBigDecimal(11, irpj);
+            stmt.setBigDecimal(12, csll);
 
             stmt.execute();
             stmt.close();
 
-        } catch (Exception e) {
-            System.err.println("Não foi possível salvar a nota no banco de dados!");
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println("Nota fiscal já existe no banco de dados!");
         }
     }
 
