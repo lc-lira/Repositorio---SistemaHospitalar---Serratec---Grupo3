@@ -1,35 +1,31 @@
 package br.com.hospital.model;
 
-public class Paciente {
+public class Paciente extends Pessoa {
   private Integer id;
-  private String nome;
   private String cpf;
-  
-public Paciente(String nome) {
-    this.nome = nome;
+
+  public Paciente(String nome, Integer id, String cpf) {
+    super(nome);
+    this.id = id;
+    this.cpf = cpf;
   }
 
   public Paciente(String nome, String cpf) {
-    this.nome = nome;
+    super(nome);
     this.cpf = cpf;
   }
 
   @Override
   public String toString() {
-    return "id: " + id + ", nome: " + nome + ", cpf: " + cpf;
+    return "Paciente [id=" + id + ", cpf=" + cpf + "]";
   }
 
   public Integer getId() {
     return id;
   }
 
-  public String getNome() {
-    return nome;
-  }
-
   public String getCpf() {
     return cpf;
   }
 
-  
 }
