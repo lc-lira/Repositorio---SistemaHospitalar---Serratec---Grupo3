@@ -4,10 +4,6 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 import br.com.hospital.enums.ValorImposto;
 
 public class NotaFiscal {
